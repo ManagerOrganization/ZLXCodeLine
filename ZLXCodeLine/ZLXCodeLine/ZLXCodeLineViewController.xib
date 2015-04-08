@@ -33,11 +33,25 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="69U-oG-5RX">
+                        <rect key="frame" x="18" y="10" width="444" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="17" id="kd9-az-PPj"/>
+                        </constraints>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="MakeZL (*^__^*) 不断更新哦，会加排行榜，每天代码行数记录等" id="qAH-VP-Ir0">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="PND-wv-V6q" secondAttribute="trailing" constant="20" id="CXH-xE-Aq6"/>
                     <constraint firstItem="PND-wv-V6q" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="50" id="E4X-zB-Cf8"/>
                     <constraint firstItem="PND-wv-V6q" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="TB5-l2-mAe"/>
+                    <constraint firstAttribute="bottom" secondItem="69U-oG-5RX" secondAttribute="bottom" constant="10" id="fYz-C6-jye"/>
+                    <constraint firstAttribute="trailing" secondItem="69U-oG-5RX" secondAttribute="trailing" constant="20" id="gSj-pc-7Wm"/>
+                    <constraint firstItem="69U-oG-5RX" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="pxj-mo-gWS"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="139" y="95.5"/>
