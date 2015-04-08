@@ -22,8 +22,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="480" height="373"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PND-wv-V6q">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PND-wv-V6q">
                         <rect key="frame" x="18" y="293" width="444" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="gnH-Ra-Otg"/>
+                        </constraints>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="正在计算中哦.." id="m3q-d6-5qV">
                             <font key="font" metaFont="system" size="18"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -31,6 +34,11 @@
                         </textFieldCell>
                     </textField>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="PND-wv-V6q" secondAttribute="trailing" constant="20" id="CXH-xE-Aq6"/>
+                    <constraint firstItem="PND-wv-V6q" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="50" id="E4X-zB-Cf8"/>
+                    <constraint firstItem="PND-wv-V6q" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="TB5-l2-mAe"/>
+                </constraints>
             </view>
             <point key="canvasLocation" x="139" y="95.5"/>
         </window>

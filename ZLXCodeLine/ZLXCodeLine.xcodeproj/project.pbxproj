@@ -63,16 +63,40 @@
 		48C0D1981AD3DC6100CA5DFB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				48C7CFEF1AD4F699005BA715 /* ZLXCodeFileType.h */,
-				48C7CFF01AD4F699005BA715 /* ZLXCodeFileType.m */,
+				48C80D621AD5484B00367FB4 /* Classes */,
 				48C0D1991AD3DC6100CA5DFB /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		48C80D621AD5484B00367FB4 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
 				48E1357D1AD4CBC5005EAE07 /* ZLXCodeLine.h */,
 				48E1357E1AD4CBC5005EAE07 /* ZLXCodeLine.m */,
+				48C80D641AD5486A00367FB4 /* Model */,
+				48C80D631AD5485F00367FB4 /* ViewController */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		48C80D631AD5485F00367FB4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
 				484BA39E1AD4FDD400C80838 /* ZLXCodeLineViewController.h */,
 				484BA39F1AD4FDD400C80838 /* ZLXCodeLineViewController.m */,
 				4844575B1AD4FEBA0052A3A1 /* ZLXCodeLineViewController.xib */,
 			);
-			name = "Supporting Files";
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		48C80D641AD5486A00367FB4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				48C7CFEF1AD4F699005BA715 /* ZLXCodeFileType.h */,
+				48C7CFF01AD4F699005BA715 /* ZLXCodeFileType.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

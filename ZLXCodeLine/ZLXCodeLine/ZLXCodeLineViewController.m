@@ -36,13 +36,11 @@
 
 - (void)windowDidLoad{
     [self searchCodeWithPath:self.workspace];
-    self.textView = [[NSTextView alloc] init];
+    self.textView = [[NSTextView alloc] initWithFrame:NSRectFromCGRect(CGRectMake(20, 0, self.titleField.frame.size.width, 280))];
     self.textView.editable = NO;
     self.textView.alignment = NSCenterTextAlignment;
     self.textView.backgroundColor = [NSColor clearColor];
-    CGFloat height = 280;
-    self.textView.frame = NSRectFromCGRect(CGRectMake(20, height, self.titleField.frame.size.width, height));
-    
+    self.textView.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable | kCALayerMinXMargin | kCALayerMinYMargin;
     [self.centerView addSubview:self.textView];
     
     self.titleField.stringValue = [NSString stringWithFormat:@"项目共有%ld行代码!",self.codeLines];
@@ -51,70 +49,73 @@
     }
 }
 - (void)searchCodeWithPath:(NSString *)path{
-    BOOL isDir = NO;
-    // 如果存在这个目录就遍历
-    if([self.fileManager fileExistsAtPath:path isDirectory:&isDir]){
-        
-        if (isDir) {
-            NSArray *paths = [self.fileManager contentsOfDirectoryAtPath:path error:nil];
-            for (NSString *pathName in paths) {
-                if ([pathName hasPrefix:@"."]) {
-                    continue;
-                }
-                BOOL pathIsDir = NO;
-                NSString *pathComponentName = [path stringByAppendingPathComponent:pathName];
-                
-                if ([self.fileManager fileExistsAtPath:pathComponentName isDirectory:&pathIsDir]) {
-                    if (!pathIsDir) {
-                        NSString *str = [[NSString alloc] initWithContentsOfFile:pathComponentName encoding:NSUTF8StringEncoding error:nil];
-                        NSInteger lineCounts = [[str componentsSeparatedByString:@"\n"] count];
-                        
-                        ZLXCodeFileType *fileType = nil;
-                        
-                        if (![self.fileExtesionDict valueForKeyPath:[pathComponentName pathExtension]]) {
-                            fileType = [[ZLXCodeFileType alloc] init];
-                            fileType.counts = 1;
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        // 如果存在这个目录就遍历
+        BOOL isDir = NO;
+        if([self.fileManager fileExistsAtPath:path isDirectory:&isDir]){
+            
+            if (isDir) {
+                NSArray *paths = [self.fileManager contentsOfDirectoryAtPath:path error:nil];
+                for (NSString *pathName in paths) {
+                    if ([pathName hasPrefix:@"."]) {
+                        continue;
+                    }
+                    BOOL pathIsDir = NO;
+                    NSString *pathComponentName = [path stringByAppendingPathComponent:pathName];
+                    
+                    if ([self.fileManager fileExistsAtPath:pathComponentName isDirectory:&pathIsDir]) {
+                        if (!pathIsDir) {
+                            NSString *str = [[NSString alloc] initWithContentsOfFile:pathComponentName encoding:NSUTF8StringEncoding error:nil];
+                            NSInteger lineCounts = [[str componentsSeparatedByString:@"\n"] count];
+                            
+                            ZLXCodeFileType *fileType = nil;
+                            
+                            if (![self.fileExtesionDict valueForKeyPath:[pathComponentName pathExtension]]) {
+                                fileType = [[ZLXCodeFileType alloc] init];
+                                fileType.counts = 1;
+                            }else{
+                                fileType = [self.fileExtesionDict valueForKeyPath:[pathComponentName pathExtension]];
+                                fileType.counts += 1;
+                            }
+                            
+                            fileType.typeName = [pathComponentName pathExtension];
+                            fileType.lines += lineCounts;
+                            [self.fileExtesionDict setValue:fileType forKeyPath:[pathComponentName pathExtension]];
+                            self.codeLines += lineCounts;
                         }else{
-                            fileType = [self.fileExtesionDict valueForKeyPath:[pathComponentName pathExtension]];
-                            fileType.counts += 1;
+                            [self searchCodeWithPath:pathComponentName];
                         }
                         
-                        fileType.typeName = [pathComponentName pathExtension];
-                        fileType.lines += lineCounts;
-                        [self.fileExtesionDict setValue:fileType forKeyPath:[pathComponentName pathExtension]];
-                        self.codeLines += lineCounts;
-                    }else{
-                        [self searchCodeWithPath:pathComponentName];
                     }
-                    
                 }
-            }
-        }else{
-            if ([path hasPrefix:@"."]) {
-                return ;
-            }
-            NSString *str = [[NSString alloc] initWithContentsOfFile:[path stringByAppendingPathComponent:path] encoding:NSUTF8StringEncoding error:nil];
-            
-            NSInteger lineCounts = [[str componentsSeparatedByString:@"\n"] count];
-            
-            ZLXCodeFileType *fileType = nil;
-            
-            if (![self.fileExtesionDict valueForKeyPath:[path pathExtension]]) {
-                fileType = [[ZLXCodeFileType alloc] init];
-                fileType.counts = 1;
             }else{
-                fileType = [self.fileExtesionDict valueForKeyPath:[path pathExtension]];
-                fileType.counts += 1;
+                if ([path hasPrefix:@"."]) {
+                    return ;
+                }
+                NSString *str = [[NSString alloc] initWithContentsOfFile:[path stringByAppendingPathComponent:path] encoding:NSUTF8StringEncoding error:nil];
+                
+                NSInteger lineCounts = [[str componentsSeparatedByString:@"\n"] count];
+                
+                ZLXCodeFileType *fileType = nil;
+                
+                if (![self.fileExtesionDict valueForKeyPath:[path pathExtension]]) {
+                    fileType = [[ZLXCodeFileType alloc] init];
+                    fileType.counts = 1;
+                }else{
+                    fileType = [self.fileExtesionDict valueForKeyPath:[path pathExtension]];
+                    fileType.counts += 1;
+                }
+                
+                fileType.typeName = [path pathExtension];
+                fileType.lines += lineCounts;
+                [self.fileExtesionDict setValue:fileType forKeyPath:[path pathExtension]];
+                
+                self.codeLines += lineCounts;
             }
             
-            fileType.typeName = [path pathExtension];
-            fileType.lines += lineCounts;
-            [self.fileExtesionDict setValue:fileType forKeyPath:[path pathExtension]];
-            
-            self.codeLines += lineCounts;
         }
-        
-    }
+    });
+    
     
 }
 
