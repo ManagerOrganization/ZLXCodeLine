@@ -37,11 +37,13 @@
 - (void)windowDidLoad{
     [self searchCodeWithPath:self.workspace];
     self.textView = [[NSTextView alloc] init];
+    self.textView.editable = NO;
     self.textView.alignment = NSCenterTextAlignment;
-    self.textView.frame = NSRectFromCGRect(CGRectMake(0, 250, self.titleField.frame.size.width, 250));
-    [self.centerView addSubview:self.textView];
+    self.textView.backgroundColor = [NSColor clearColor];
+    CGFloat height = 280;
+    self.textView.frame = NSRectFromCGRect(CGRectMake(20, height, self.titleField.frame.size.width, height));
     
-    NSLog(@" -- %@",self.textView);
+    [self.centerView addSubview:self.textView];
     
     self.titleField.stringValue = [NSString stringWithFormat:@"项目共有%ld行代码!",self.codeLines];
     for (ZLXCodeFileType *fileType in [self.fileExtesionDict allValues]) {
