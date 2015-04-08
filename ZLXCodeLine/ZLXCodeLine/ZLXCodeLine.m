@@ -67,6 +67,7 @@
     NSRange preRange = [notiStr rangeOfString:@"'"];
     notiStr = [notiStr substringFromIndex:preRange.location+preRange.length];
     notiStr = [notiStr stringByReplacingOccurrencesOfString:@".xcodeproj" withString:@""];
+    NSLog(@"%@",self.workspace);
     self.workspace = notiStr;
 }
 

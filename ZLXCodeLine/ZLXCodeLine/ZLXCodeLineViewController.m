@@ -48,16 +48,19 @@
         [self.textView setString:[NSString stringWithFormat:@"%@\n.%@后缀名有%ld个，有%ld行",[[self.textView textStorage] string],fileType.typeName,fileType.counts, fileType.lines]];
     }
 }
+
 - (void)searchCodeWithPath:(NSString *)path{
     // 如果存在这个目录就遍历
     BOOL isDir = NO;
     if([self.fileManager fileExistsAtPath:path isDirectory:&isDir]){
-        
         if (isDir) {
             NSArray *paths = [self.fileManager contentsOfDirectoryAtPath:path error:nil];
             for (NSString *pathName in paths) {
-                if ([pathName hasPrefix:@"."]) {
-                    continue;
+                if ([pathName hasPrefix:@"."] ||
+                    [pathName hasSuffix:@"jpg"] ||
+                    [pathName hasSuffix:@"png"] ||
+                    [pathName hasSuffix:@"gif"]) {
+                    continue ;
                 }
                 BOOL pathIsDir = NO;
                 NSString *pathComponentName = [path stringByAppendingPathComponent:pathName];
@@ -86,19 +89,18 @@
                             [self searchCodeWithPath:pathComponentName];
                         });
                     }
-                    
                 }
             }
         }else{
-            if ([path hasPrefix:@"."]) {
+            if ([path hasPrefix:@"."] ||
+                [path hasSuffix:@"jpg"] ||
+                [path hasSuffix:@"png"] ||
+                [path hasSuffix:@"gif"]) {
                 return ;
             }
             NSString *str = [[NSString alloc] initWithContentsOfFile:[path stringByAppendingPathComponent:path] encoding:NSUTF8StringEncoding error:nil];
-            
             NSInteger lineCounts = [[str componentsSeparatedByString:@"\n"] count];
-            
             ZLXCodeFileType *fileType = nil;
-            
             if (![self.fileExtesionDict valueForKeyPath:[path pathExtension]]) {
                 fileType = [[ZLXCodeFileType alloc] init];
                 fileType.counts = 1;
