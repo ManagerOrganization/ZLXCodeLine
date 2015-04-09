@@ -39,7 +39,12 @@
 }
 
 - (void)addNotification{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(test:) name:@"DVTSourceExpressionUnderMouseDidChangeNotification" object:nil];
+}
+
+- (void)test:(NSNotification *)noti{
+//    NSLog(@"ZL : %@, %@",noti,noti.object);
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)noti{
