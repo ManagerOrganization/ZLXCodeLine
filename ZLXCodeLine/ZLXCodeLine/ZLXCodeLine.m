@@ -39,7 +39,7 @@
 }
 
 - (void)addNotification{
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:nil];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(test:) name:@"DVTSourceExpressionUnderMouseDidChangeNotification" object:nil];
 }
 
