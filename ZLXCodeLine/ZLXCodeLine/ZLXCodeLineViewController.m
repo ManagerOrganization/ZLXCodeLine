@@ -35,6 +35,7 @@
 }
 
 - (void)windowDidLoad{
+    
     [self searchCodeWithPath:self.workspace];
     self.textView = [[NSTextView alloc] initWithFrame:NSRectFromCGRect(CGRectMake(20, 0, self.titleField.frame.size.width, 280))];
     self.textView.editable = NO;
@@ -85,9 +86,7 @@
                         [self.fileExtesionDict setValue:fileType forKeyPath:[pathComponentName pathExtension]];
                         self.codeLines += lineCounts;
                     }else{
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self searchCodeWithPath:pathComponentName];
-                        });
+                        [self searchCodeWithPath:pathComponentName];
                     }
                 }
             }
@@ -98,7 +97,7 @@
                 [path hasSuffix:@"gif"]) {
                 return ;
             }
-            NSString *str = [[NSString alloc] initWithContentsOfFile:[path stringByAppendingPathComponent:path] encoding:NSUTF8StringEncoding error:nil];
+            NSString *str = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
             NSInteger lineCounts = [[str componentsSeparatedByString:@"\n"] count];
             ZLXCodeFileType *fileType = nil;
             if (![self.fileExtesionDict valueForKeyPath:[path pathExtension]]) {
