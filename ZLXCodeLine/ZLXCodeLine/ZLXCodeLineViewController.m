@@ -70,7 +70,9 @@
                     if (!pathIsDir) {
                         NSString *str = [[NSString alloc] initWithContentsOfFile:pathComponentName encoding:NSUTF8StringEncoding error:nil];
                         NSInteger lineCounts = [[str componentsSeparatedByString:@"\n"] count];
-                        
+                        if (lineCounts <= 0) {
+                            continue;
+                        }
                         ZLXCodeFileType *fileType = nil;
                         
                         if (![self.fileExtesionDict valueForKeyPath:[pathComponentName pathExtension]]) {
@@ -99,20 +101,21 @@
             }
             NSString *str = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
             NSInteger lineCounts = [[str componentsSeparatedByString:@"\n"] count];
-            ZLXCodeFileType *fileType = nil;
-            if (![self.fileExtesionDict valueForKeyPath:[path pathExtension]]) {
-                fileType = [[ZLXCodeFileType alloc] init];
-                fileType.counts = 1;
-            }else{
-                fileType = [self.fileExtesionDict valueForKeyPath:[path pathExtension]];
-                fileType.counts += 1;
+            if (lineCounts > 0) {
+                ZLXCodeFileType *fileType = nil;
+                if (![self.fileExtesionDict valueForKeyPath:[path pathExtension]]) {
+                    fileType = [[ZLXCodeFileType alloc] init];
+                    fileType.counts = 1;
+                }else{
+                    fileType = [self.fileExtesionDict valueForKeyPath:[path pathExtension]];
+                    fileType.counts += 1;
+                }
+                
+                fileType.typeName = [path pathExtension];
+                fileType.lines += lineCounts;
+                [self.fileExtesionDict setValue:fileType forKeyPath:[path pathExtension]];
+                self.codeLines += lineCounts;
             }
-            
-            fileType.typeName = [path pathExtension];
-            fileType.lines += lineCounts;
-            [self.fileExtesionDict setValue:fileType forKeyPath:[path pathExtension]];
-            
-            self.codeLines += lineCounts;
         }
     }
 }
