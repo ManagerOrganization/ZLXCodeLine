@@ -9,24 +9,27 @@
 #import "ZLXCodeLineViewController.h"
 #import "ZLXCodeFileType.h"
 
+typedef void(^callBack)();
+
 @interface ZLXCodeLineViewController () <NSTableViewDataSource,NSTableViewDelegate>
 @property (strong,nonatomic) NSFileManager *fileManager;
 @property (assign,nonatomic) NSUInteger codeLines;
 @property (strong,nonatomic) NSMutableDictionary *fileExtesionDict;
 @property (weak) IBOutlet NSTextField *titleField;
-@property (strong,nonatomic) NSTextView *textView;
 @property (weak) IBOutlet NSView *centerView;
+@property (weak) IBOutlet NSTableView *tableView;
 
-@property (strong,nonatomic) NSMutableArray *array;
+@property (strong,nonatomic) NSMutableArray *files;
+
 @end
 
 @implementation ZLXCodeLineViewController
 
-- (NSMutableArray *)array{
-    if (!_array) {
-        _array = [NSMutableArray array];
+- (NSMutableArray *)files{
+    if (!_files) {
+        _files = [NSMutableArray array];
     }
-    return _array;
+    return _files;
 }
 
 - (NSMutableDictionary *)fileExtesionDict{
@@ -45,111 +48,86 @@
 
 - (void)windowDidLoad{
     
-    [self searchCodeWithPath:self.workspace];
-    self.textView = [[NSTextView alloc] initWithFrame:NSRectFromCGRect(CGRectMake(20, 0, self.titleField.frame.size.width, 280))];
-    self.textView.editable = NO;
-    self.textView.alignment = NSCenterTextAlignment;
-    self.textView.backgroundColor = [NSColor clearColor];
-    self.textView.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable | kCALayerMinXMargin | kCALayerMinYMargin;
-    [self.centerView addSubview:self.textView];
+    self.tableView.backgroundColor = [NSColor clearColor];
+    self.tableView.headerView = nil;
+    [self searchFiles];
     
-//    NSTableView *tableView = [[NSTableView alloc] init];
-//    tableView.frame = NSRectFromCGRect(CGRectMake(20, 0, self.titleField.frame.size.width, 280));
-//    tableView.dataSource = self;
-//    tableView.delegate = self;
-//    [self.centerView addSubview:tableView];
-    
-    self.titleField.stringValue = [NSString stringWithFormat:@"%@项目共有%ld行代码!", [[self.workspace componentsSeparatedByString:@"/"] lastObject],self.codeLines];
 //    for (NSString *text in self.array) {
 //        [self.textView setString:[NSString stringWithFormat:@"%@\n%@",[[self.textView textStorage] string],text]];
 //    }
-    for (ZLXCodeFileType *fileType in [self.fileExtesionDict allValues]) {
-        [self.textView setString:[NSString stringWithFormat:@"%@\n.%@后缀名有%ld个，有%ld行",[[self.textView textStorage] string],fileType.typeName,fileType.counts, fileType.lines]];
-    }
+//    for (ZLXCodeFileType *fileType in [self.fileExtesionDict allValues]) {
+//        [self.textView setString:[NSString stringWithFormat:@"%@\n.%@后缀名有%ld个，有%ld行",[[self.textView textStorage] string],fileType.typeName,fileType.counts, fileType.lines]];
+//    }
+}
+
+- (void)searchFiles{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSMutableArray *arrM = [NSMutableArray array];
+        NSArray *array = [self.fileManager subpathsAtPath:self.workspace];
+        for (NSString *arr in array) {
+            BOOL isDir = NO;
+            [self.fileManager fileExistsAtPath:[self.workspace stringByAppendingPathComponent:arr] isDirectory:&isDir];
+            if (isDir) {
+                continue;
+            }
+            if([arr rangeOfString:@"/."].location == NSNotFound && ![arr hasPrefix:@"."]){
+                [arrM addObject:[self.workspace stringByAppendingPathComponent:arr]];
+            }
+        }
+        
+        NSInteger arrCount = arrM.count;
+        for (NSInteger i = 0; i <= arrCount; i++) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.titleField setStringValue:[NSString stringWithFormat:@"已经遍历 %% %f 一共有%ld文件,正在扫描%ld个文件!",((double)i / (double)(arrCount)) * 100,i,arrCount]];
+            });
+            
+            if (i == arrCount) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.titleField.stringValue = [NSString stringWithFormat:@"%@项目共有%ld行代码!", [[self.workspace componentsSeparatedByString:@"/"] lastObject],self.codeLines];
+                    [self.tableView reloadData];
+                });
+                break;
+            }
+            
+            NSString *pathArr = arrM[i];
+            NSString *str = [[NSString alloc] initWithContentsOfFile:pathArr encoding:NSUTF8StringEncoding error:nil];
+            NSInteger lineCounts = [[str componentsSeparatedByString:@"\n"] count];
+            if (lineCounts > 0) {
+                ZLXCodeFileType *fileType = nil;
+                if (![self.fileExtesionDict valueForKeyPath:[self.workspace pathExtension]]) {
+                    fileType = [[ZLXCodeFileType alloc] init];
+                    fileType.counts = 1;
+                }else{
+                    fileType = [self.fileExtesionDict valueForKeyPath:[self.workspace pathExtension]];
+                    fileType.counts += 1;
+                }
+                
+                fileType.typeName = [self.workspace pathExtension];
+                fileType.lines += lineCounts;
+                [self.fileExtesionDict setValue:fileType forKeyPath:[self.workspace pathExtension]];
+                [self.files addObject:[NSString stringWithFormat:@"%ld行 %@",lineCounts, pathArr]];
+                self.codeLines += lineCounts;
+            }
+        }
+    });
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    return self.array.count;
+    return self.files.count;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
-    NSButton *btn = [[NSButton alloc] init];
-    if (self.array.count > row) {
-        btn.title = self.array[row];
-//        btn.target = self;
-//        btn.action = @selector(clickButton:);
+    NSTextField *field = nil;
+    if (self.files.count > row) {
+        field = [[NSTextField alloc] init];
+        field.editable = NO;
+        [field setStringValue:self.files[row]];
     }
-    return btn;
+    return field;
 }
 
-
-
-- (void)searchCodeWithPath:(NSString *)path{
-    // 如果存在这个目录就遍历
-    BOOL isDir = NO;
-    if([self.fileManager fileExistsAtPath:path isDirectory:&isDir]){
-        if (isDir) {
-            NSArray *paths = [self.fileManager contentsOfDirectoryAtPath:path error:nil];
-            for (NSString *pathName in paths) {
-                if ([pathName hasPrefix:@"."]) {
-                    continue ;
-                }
-                BOOL pathIsDir = NO;
-                NSString *pathComponentName = [path stringByAppendingPathComponent:pathName];
-                
-                if ([self.fileManager fileExistsAtPath:pathComponentName isDirectory:&pathIsDir]) {
-                    if (!pathIsDir) {
-                        NSString *str = [[NSString alloc] initWithContentsOfFile:pathComponentName encoding:NSUTF8StringEncoding error:nil];
-                        NSInteger lineCounts = [[str componentsSeparatedByString:@"\n"] count];
-                        if (lineCounts <= 0) {
-                            continue;
-                        }
-                        ZLXCodeFileType *fileType = nil;
-                        
-                        if (![self.fileExtesionDict valueForKeyPath:[pathComponentName pathExtension]]) {
-                            fileType = [[ZLXCodeFileType alloc] init];
-                            fileType.counts = 1;
-                        }else{
-                            fileType = [self.fileExtesionDict valueForKeyPath:[pathComponentName pathExtension]];
-                            fileType.counts += 1;
-                        }
-                        
-                        [self.array addObject:[NSString stringWithFormat:@"%ld > %@",lineCounts, pathComponentName]];
-                        
-                        fileType.typeName = [pathComponentName pathExtension];
-                        fileType.lines += lineCounts;
-                        [self.fileExtesionDict setValue:fileType forKeyPath:[pathComponentName pathExtension]];
-                        self.codeLines += lineCounts;
-                    }else{
-                        [self searchCodeWithPath:pathComponentName];
-                    }
-                }
-            }
-        }else{
-            if (!([path hasPrefix:@"."]))
-            {
-                NSString *str = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-                NSInteger lineCounts = [[str componentsSeparatedByString:@"\n"] count];
-                if (lineCounts > 0) {
-                    ZLXCodeFileType *fileType = nil;
-                    if (![self.fileExtesionDict valueForKeyPath:[path pathExtension]]) {
-                        fileType = [[ZLXCodeFileType alloc] init];
-                        fileType.counts = 1;
-                    }else{
-                        fileType = [self.fileExtesionDict valueForKeyPath:[path pathExtension]];
-                        fileType.counts += 1;
-                    }
-                    
-                    fileType.typeName = [path pathExtension];
-                    fileType.lines += lineCounts;
-                    [self.fileExtesionDict setValue:fileType forKeyPath:[path pathExtension]];
-                    
-                    [self.array addObject:[NSString stringWithFormat:@"%ld > %@",lineCounts, path]];
-                    self.codeLines += lineCounts;
-                }
-            }
-        }
-    }
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row{
+    return 30;
 }
 
 @end
