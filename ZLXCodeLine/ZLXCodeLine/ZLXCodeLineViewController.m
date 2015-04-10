@@ -9,6 +9,8 @@
 #import "ZLXCodeLineViewController.h"
 #import "ZLXCodeFileType.h"
 
+static NSString *FilterExtensionKey = @"FilterExtensionKey";
+
 typedef void(^callBack)();
 
 @interface ZLXCodeLineViewController () <NSTableViewDataSource,NSTableViewDelegate>
@@ -20,10 +22,53 @@ typedef void(^callBack)();
 @property (weak) IBOutlet NSTableView *tableView;
 
 @property (strong,nonatomic) NSMutableArray *files;
+@property (strong,nonatomic) NSMutableArray *filterExtension;
+
+- (IBAction)switchClickOnButton:(NSButton *)sender;
+@property (weak) IBOutlet NSButton *plistButton;
+@property (weak) IBOutlet NSButton *xibButton;
+@property (weak) IBOutlet NSButton *storyboardButton;
+@property (weak) IBOutlet NSButton *warpButton;
 
 @end
 
 @implementation ZLXCodeLineViewController
+
+- (NSMutableArray *)filterExtension{
+    if (!_filterExtension) {
+        NSArray *filters = [[NSUserDefaults standardUserDefaults] objectForKey:FilterExtensionKey];
+        if (filters) {
+            _filterExtension = [NSMutableArray arrayWithArray:filters];
+        }else{
+            _filterExtension = [NSMutableArray array];
+            if (self.plistButton.state == NO) {
+                [_filterExtension addObject:self.plistButton.title];
+            }
+            if (self.xibButton.state == NO){
+                [_filterExtension addObject:self.xibButton.title];
+            }
+            if (self.storyboardButton.state == NO){
+                [_filterExtension addObject:self.storyboardButton.title];
+            }
+            if (self.warpButton.state == NO){
+                [_filterExtension addObject:self.warpButton.title];
+            }
+        }
+        
+    }
+    return _filterExtension;
+}
+
+- (IBAction)switchClickOnButton:(NSButton *)sender {
+    if (sender.state == NO) {
+        [self.filterExtension removeObject:sender.title];
+    }else{
+        [self.filterExtension addObject:sender.title];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setValue:self.filterExtension forKeyPath:FilterExtensionKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 - (NSMutableArray *)files{
     if (!_files) {
@@ -50,6 +95,11 @@ typedef void(^callBack)();
     
     self.tableView.backgroundColor = [NSColor clearColor];
     self.tableView.headerView = nil;
+    self.plistButton.state = [self switchButtonOnStateWithTitle:self.plistButton.title];
+    self.xibButton.state = [self switchButtonOnStateWithTitle:self.xibButton.title];
+    self.storyboardButton.state = [self switchButtonOnStateWithTitle:self.storyboardButton.title];
+    self.warpButton.state = [self switchButtonOnStateWithTitle:self.warpButton.title];
+    
     [self searchFiles];
     
 //    for (NSString *text in self.array) {
@@ -60,6 +110,10 @@ typedef void(^callBack)();
 //    }
 }
 
+- (BOOL)switchButtonOnStateWithTitle:(NSString *)title{
+    return [self.filterExtension containsObject:title];
+}
+
 - (void)searchFiles{
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         NSMutableArray *arrM = [NSMutableArray array];
@@ -67,10 +121,18 @@ typedef void(^callBack)();
         for (NSString *arr in array) {
             BOOL isDir = NO;
             [self.fileManager fileExistsAtPath:[self.workspace stringByAppendingPathComponent:arr] isDirectory:&isDir];
+            // 如果是文件夹 或者 存在于filterExtension里面的就直接 continue;
             if (isDir) {
                 continue;
             }
-            if([arr rangeOfString:@"/."].location == NSNotFound && ![arr hasPrefix:@"."]){
+            if ([self.filterExtension containsObject:[NSString stringWithFormat:@".%@",[arr pathExtension]]]) {
+                continue;
+            }
+            
+            if([arr rangeOfString:@"/."].location == NSNotFound &&
+               [arr rangeOfString:@".xcodeproj"].location == NSNotFound
+               && ![arr hasPrefix:@"."]
+               ){
                 [arrM addObject:[self.workspace stringByAppendingPathComponent:arr]];
             }
         }
@@ -91,7 +153,31 @@ typedef void(^callBack)();
             
             NSString *pathArr = arrM[i];
             NSString *str = [[NSString alloc] initWithContentsOfFile:pathArr encoding:NSUTF8StringEncoding error:nil];
-            NSInteger lineCounts = [[str componentsSeparatedByString:@"\n"] count];
+            
+            NSInteger lineCounts = 0;
+            if ([self.filterExtension containsObject:@"\\n"]) {
+                for (NSString *lineStr in [str componentsSeparatedByString:@"\n"]) {
+                    
+                    if (lineStr.length == 0) {
+                        continue;
+                    }
+                    
+                    BOOL isEmptyWarp = YES;
+                    for(int i = 0; i < [lineStr length]; i++)
+                    {
+                        if (![[lineStr substringWithRange:NSMakeRange(i,1)] isEqualToString:@" "]){
+                            isEmptyWarp = NO;
+                            break;
+                        }
+                    }
+                    
+                    if (!isEmptyWarp) {
+                        lineCounts++;
+                    }
+                }
+            }else {
+                lineCounts = [[str componentsSeparatedByString:@"\n"] count];
+            }
             if (lineCounts > 0) {
                 ZLXCodeFileType *fileType = nil;
                 if (![self.fileExtesionDict valueForKeyPath:[self.workspace pathExtension]]) {
