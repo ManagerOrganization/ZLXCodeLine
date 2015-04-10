@@ -35,6 +35,11 @@ typedef void(^callBack)();
 @property (weak) IBOutlet NSButton *storyboardButton;
 @property (weak) IBOutlet NSButton *warpButton;
 @property (weak) IBOutlet NSButton *cocoapodsButton;
+@property (weak) IBOutlet NSButton *jsonButton;
+@property (weak) IBOutlet NSButton *pchButton;
+@property (weak) IBOutlet NSButton *stringsButton;
+@property (weak) IBOutlet NSButton *xcworkspaceButton;
+@property (weak) IBOutlet NSButton *lockButton;
 
 @end
 
@@ -106,6 +111,11 @@ typedef void(^callBack)();
     self.storyboardButton.state = [self switchButtonOnStateWithTitle:self.storyboardButton.title];
     self.warpButton.state = [self switchButtonOnStateWithTitle:self.warpButton.title];
     self.cocoapodsButton.state = [self switchButtonOnStateWithTitle:self.cocoapodsButton.title];
+    self.pchButton.state = [self switchButtonOnStateWithTitle:self.pchButton.title];
+    self.stringsButton.state = [self switchButtonOnStateWithTitle:self.stringsButton.title];
+    self.jsonButton.state = [self switchButtonOnStateWithTitle:self.jsonButton.title];
+    self.lockButton.state = [self switchButtonOnStateWithTitle:self.lockButton.title];
+    self.xcworkspaceButton.state = [self switchButtonOnStateWithTitle:self.xcworkspaceButton.title];
     
     [self searchFiles];
     
@@ -143,7 +153,8 @@ typedef void(^callBack)();
             }
             
             if([arr rangeOfString:@"/."].location == NSNotFound &&
-               [arr rangeOfString:@".xcodeproj"].location == NSNotFound
+               [arr rangeOfString:@".xcodeproj"].location == NSNotFound &&
+               [arr rangeOfString:@".xcworkspace"].location == NSNotFound
                && ![arr hasPrefix:@"."]
                ){
                 [arrM addObject:[self.workspace stringByAppendingPathComponent:arr]];

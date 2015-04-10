@@ -4,4 +4,4 @@ This is a record of the number of lines of code - Xcode
 #### 运行后记得重启XCode (restart Xcode)
 ![image](https://github.com/MakeZL/ZLXCodeLine/blob/master/sceenhost1.png)
 ![image](https://github.com/MakeZL/ZLXCodeLine/blob/master/sceenhost4.png)
-![image](https://github.com/MakeZL/ZLXCodeLine/blob/master/sceenhost3.gif)
+![image](https://github.com/MakeZL/ZLXCodeLine/blob/master/screenhost5.gif)

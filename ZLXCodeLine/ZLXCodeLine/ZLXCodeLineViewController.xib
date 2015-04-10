@@ -9,11 +9,16 @@
             <connections>
                 <outlet property="centerView" destination="EiT-Mj-1SZ" id="PMW-QA-VHM"/>
                 <outlet property="cocoapodsButton" destination="EFD-Iy-Y71" id="Vef-0Z-rT7"/>
+                <outlet property="jsonButton" destination="7jj-zp-KET" id="yc6-Wq-RTH"/>
+                <outlet property="lockButton" destination="mR2-fd-Kws" id="ZTJ-Fk-GmB"/>
+                <outlet property="pchButton" destination="Dfp-HT-4am" id="hXv-yQ-DFE"/>
                 <outlet property="plistButton" destination="QZx-aK-0nN" id="Sn1-zQ-eMR"/>
                 <outlet property="storyboardButton" destination="Js9-Bd-bDP" id="ZKo-pt-e6T"/>
+                <outlet property="stringsButton" destination="EQ9-qw-A3S" id="Pls-vM-R0M"/>
                 <outlet property="tableView" destination="PDo-cm-iNU" id="9Is-sc-dxP"/>
                 <outlet property="titleField" destination="PND-wv-V6q" id="5Io-lO-0x6"/>
                 <outlet property="warpButton" destination="pHK-1X-Jbz" id="nPQ-vh-Xfl"/>
+                <outlet property="xcworkspaceButton" destination="0ma-Ca-Jv6" id="ejK-el-X99"/>
                 <outlet property="xibButton" destination="KCc-59-wrq" id="l7G-sP-Eky"/>
             </connections>
         </customObject>
@@ -22,14 +27,14 @@
         <window title="XCode Line" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="667" height="559"/>
+            <rect key="contentRect" x="196" y="240" width="838" height="612"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="667" height="559"/>
+                <rect key="frame" x="0.0" y="0.0" width="838" height="612"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PND-wv-V6q">
-                        <rect key="frame" x="18" y="479" width="631" height="30"/>
+                        <rect key="frame" x="18" y="532" width="802" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="gnH-Ra-Otg"/>
                         </constraints>
@@ -40,7 +45,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="69U-oG-5RX">
-                        <rect key="frame" x="18" y="10" width="631" height="17"/>
+                        <rect key="frame" x="18" y="10" width="802" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="kd9-az-PPj"/>
                         </constraints>
@@ -51,7 +56,7 @@
                         </textFieldCell>
                     </textField>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4q-9F-G7U">
-                        <rect key="frame" x="20" y="67" width="627" height="402"/>
+                        <rect key="frame" x="20" y="67" width="798" height="455"/>
                         <clipView key="contentView" id="XKu-S9-Xvu">
                             <rect key="frame" x="1" y="17" width="238" height="117"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -62,7 +67,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn width="622.1171875" minWidth="40" maxWidth="1000" id="IN1-vI-qAJ">
+                                        <tableColumn width="793.1171875" minWidth="40" maxWidth="1000" id="IN1-vI-qAJ">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -76,7 +81,7 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="LRX-LG-qvm">
-                                                    <rect key="frame" x="1" y="1" width="622" height="17"/>
+                                                    <rect key="frame" x="1" y="1" width="793" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6P1-9i-qFP">
@@ -117,7 +122,7 @@
                         </tableHeaderView>
                     </scrollView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dbt-xZ-yQe">
-                        <rect key="frame" x="18" y="511" width="110" height="23"/>
+                        <rect key="frame" x="18" y="564" width="110" height="23"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Filter过滤选项" id="pgd-1h-gNp">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -125,7 +130,7 @@
                         </textFieldCell>
                     </textField>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QZx-aK-0nN">
-                        <rect key="frame" x="209" y="506" width="64" height="35"/>
+                        <rect key="frame" x="209" y="559" width="64" height="35"/>
                         <buttonCell key="cell" type="check" title=".plist" bezelStyle="regularSquare" imagePosition="left" inset="2" id="5tl-FM-cgc">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -135,7 +140,7 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KCc-59-wrq">
-                        <rect key="frame" x="157" y="506" width="55" height="35"/>
+                        <rect key="frame" x="154" y="559" width="55" height="35"/>
                         <buttonCell key="cell" type="check" title=".xib" bezelStyle="regularSquare" imagePosition="left" inset="2" id="3wt-el-HFo">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -145,7 +150,7 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Js9-Bd-bDP">
-                        <rect key="frame" x="265" y="506" width="101" height="35"/>
+                        <rect key="frame" x="265" y="559" width="101" height="35"/>
                         <buttonCell key="cell" type="check" title=".storyboard" bezelStyle="regularSquare" imagePosition="left" inset="2" id="4PZ-iD-zSK">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -155,7 +160,7 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pHK-1X-Jbz">
-                        <rect key="frame" x="111" y="506" width="44" height="35"/>
+                        <rect key="frame" x="111" y="559" width="44" height="35"/>
                         <buttonCell key="cell" type="check" title="\n" bezelStyle="regularSquare" imagePosition="left" inset="2" id="gew-Nc-r5O">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -165,13 +170,63 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EFD-Iy-Y71">
-                        <rect key="frame" x="364" y="506" width="101" height="35"/>
+                        <rect key="frame" x="364" y="559" width="101" height="35"/>
                         <buttonCell key="cell" type="check" title=".cocoapods" bezelStyle="regularSquare" imagePosition="left" inset="2" id="2FT-VU-qkT">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
                             <action selector="switchClickOnButton:" target="-2" id="2er-Sp-8rH"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7jj-zp-KET">
+                        <rect key="frame" x="460" y="558" width="66" height="35"/>
+                        <buttonCell key="cell" type="check" title=".json" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Qe8-tc-u3Q">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="switchClickOnButton:" target="-2" id="gIm-09-q3b"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dfp-HT-4am">
+                        <rect key="frame" x="519" y="558" width="59" height="35"/>
+                        <buttonCell key="cell" type="check" title=".pch" bezelStyle="regularSquare" imagePosition="left" inset="2" id="ocN-8Q-bMA">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="switchClickOnButton:" target="-2" id="E4S-G6-AHI"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EQ9-qw-A3S">
+                        <rect key="frame" x="572" y="558" width="69" height="35"/>
+                        <buttonCell key="cell" type="check" title=".strings" bezelStyle="regularSquare" imagePosition="left" inset="2" id="1KW-oC-vDo">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="switchClickOnButton:" target="-2" id="9R3-Lc-idB"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mR2-fd-Kws">
+                        <rect key="frame" x="645" y="558" width="53" height="35"/>
+                        <buttonCell key="cell" type="check" title=".lock" bezelStyle="regularSquare" imagePosition="left" inset="2" id="apn-Bj-Y4G">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="switchClickOnButton:" target="-2" id="fNb-0p-vTv"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0ma-Ca-Jv6">
+                        <rect key="frame" x="702" y="558" width="118" height="35"/>
+                        <buttonCell key="cell" type="check" title=". xcworkspace" bezelStyle="regularSquare" imagePosition="left" inset="2" id="rDn-Of-udI">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="switchClickOnButton:" target="-2" id="MFW-4j-qac"/>
                         </connections>
                     </button>
                 </subviews>
@@ -188,7 +243,7 @@
                     <constraint firstItem="B4q-9F-G7U" firstAttribute="top" secondItem="PND-wv-V6q" secondAttribute="bottom" constant="10" id="vNV-sS-Mf8"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="232.5" y="188.5"/>
+            <point key="canvasLocation" x="70" y="328"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="5N2-KN-JlK"/>
     </objects>
