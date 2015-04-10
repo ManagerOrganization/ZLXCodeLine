@@ -8,6 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ZLXCodeLineViewController">
             <connections>
                 <outlet property="centerView" destination="EiT-Mj-1SZ" id="PMW-QA-VHM"/>
+                <outlet property="cocoapodsButton" destination="EFD-Iy-Y71" id="Vef-0Z-rT7"/>
                 <outlet property="plistButton" destination="QZx-aK-0nN" id="Sn1-zQ-eMR"/>
                 <outlet property="storyboardButton" destination="Js9-Bd-bDP" id="ZKo-pt-e6T"/>
                 <outlet property="tableView" destination="PDo-cm-iNU" id="9Is-sc-dxP"/>
@@ -161,6 +162,16 @@
                         </buttonCell>
                         <connections>
                             <action selector="switchClickOnButton:" target="-2" id="kBB-y4-76U"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EFD-Iy-Y71">
+                        <rect key="frame" x="364" y="506" width="101" height="35"/>
+                        <buttonCell key="cell" type="check" title=".cocoapods" bezelStyle="regularSquare" imagePosition="left" inset="2" id="2FT-VU-qkT">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="switchClickOnButton:" target="-2" id="2er-Sp-8rH"/>
                         </connections>
                     </button>
                 </subviews>

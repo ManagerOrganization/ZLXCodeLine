@@ -40,11 +40,6 @@
 
 - (void)addNotification{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(test:) name:@"DVTSourceExpressionUnderMouseDidChangeNotification" object:nil];
-}
-
-- (void)test:(NSNotification *)noti{
-//    NSLog(@"ZL : %@, %@",noti,noti.object);
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)noti{
@@ -71,8 +66,18 @@
     notiStr = [notiStr stringByDeletingLastPathComponent];
     NSRange preRange = [notiStr rangeOfString:@"'"];
     notiStr = [notiStr substringFromIndex:preRange.location+preRange.length];
-    notiStr = [notiStr stringByReplacingOccurrencesOfString:@".xcodeproj" withString:@""];
-    self.workspace = [notiStr stringByDeletingLastPathComponent];
+
+    if ([notiStr rangeOfString:@".xcodeproj"].location != NSNotFound) {
+        notiStr = [notiStr stringByReplacingOccurrencesOfString:@".xcodeproj" withString:@""];
+    }else if ([notiStr rangeOfString:@".xcworkspace"].location != NSNotFound){
+        notiStr = [notiStr stringByReplacingOccurrencesOfString:@".xcworkspace" withString:@""];
+    }
+    
+    if ([[[notiStr stringByDeletingLastPathComponent] lastPathComponent] rangeOfString:[notiStr lastPathComponent]].location != NSNotFound) {
+        self.workspace = [notiStr stringByDeletingLastPathComponent];
+    }else{
+        self.workspace = notiStr;
+    }
 }
 
 @end

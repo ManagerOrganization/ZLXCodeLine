@@ -14,21 +14,27 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
 typedef void(^callBack)();
 
 @interface ZLXCodeLineViewController () <NSTableViewDataSource,NSTableViewDelegate>
+
+// Manager
 @property (strong,nonatomic) NSFileManager *fileManager;
-@property (assign,nonatomic) NSUInteger codeLines;
-@property (strong,nonatomic) NSMutableDictionary *fileExtesionDict;
+// UI
 @property (weak) IBOutlet NSTextField *titleField;
 @property (weak) IBOutlet NSView *centerView;
 @property (weak) IBOutlet NSTableView *tableView;
 
+// Data
+@property (assign,nonatomic) NSUInteger codeLines;
+@property (strong,nonatomic) NSMutableDictionary *fileExtesionDict;
 @property (strong,nonatomic) NSMutableArray *files;
 @property (strong,nonatomic) NSMutableArray *filterExtension;
 
+// IB
 - (IBAction)switchClickOnButton:(NSButton *)sender;
 @property (weak) IBOutlet NSButton *plistButton;
 @property (weak) IBOutlet NSButton *xibButton;
 @property (weak) IBOutlet NSButton *storyboardButton;
 @property (weak) IBOutlet NSButton *warpButton;
+@property (weak) IBOutlet NSButton *cocoapodsButton;
 
 @end
 
@@ -99,6 +105,7 @@ typedef void(^callBack)();
     self.xibButton.state = [self switchButtonOnStateWithTitle:self.xibButton.title];
     self.storyboardButton.state = [self switchButtonOnStateWithTitle:self.storyboardButton.title];
     self.warpButton.state = [self switchButtonOnStateWithTitle:self.warpButton.title];
+    self.cocoapodsButton.state = [self switchButtonOnStateWithTitle:self.cocoapodsButton.title];
     
     [self searchFiles];
     
@@ -127,6 +134,12 @@ typedef void(^callBack)();
             }
             if ([self.filterExtension containsObject:[NSString stringWithFormat:@".%@",[arr pathExtension]]]) {
                 continue;
+            }
+            
+            if ([self.filterExtension containsObject:@".cocoapods"]) {
+                if ([arr rangeOfString:@"Pods"].location != NSNotFound) {
+                    continue;
+                }
             }
             
             if([arr rangeOfString:@"/."].location == NSNotFound &&
