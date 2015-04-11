@@ -8,18 +8,10 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ZLXCodeLineViewController">
             <connections>
                 <outlet property="centerView" destination="EiT-Mj-1SZ" id="PMW-QA-VHM"/>
-                <outlet property="cocoapodsButton" destination="EFD-Iy-Y71" id="Vef-0Z-rT7"/>
-                <outlet property="jsonButton" destination="7jj-zp-KET" id="yc6-Wq-RTH"/>
-                <outlet property="lockButton" destination="mR2-fd-Kws" id="ZTJ-Fk-GmB"/>
-                <outlet property="pchButton" destination="Dfp-HT-4am" id="hXv-yQ-DFE"/>
-                <outlet property="plistButton" destination="QZx-aK-0nN" id="Sn1-zQ-eMR"/>
-                <outlet property="storyboardButton" destination="Js9-Bd-bDP" id="ZKo-pt-e6T"/>
-                <outlet property="stringsButton" destination="EQ9-qw-A3S" id="Pls-vM-R0M"/>
+                <outlet property="scrollView" destination="B4q-9F-G7U" id="dEh-TR-dyb"/>
                 <outlet property="tableView" destination="PDo-cm-iNU" id="9Is-sc-dxP"/>
                 <outlet property="titleField" destination="PND-wv-V6q" id="5Io-lO-0x6"/>
-                <outlet property="warpButton" destination="pHK-1X-Jbz" id="nPQ-vh-Xfl"/>
-                <outlet property="xcworkspaceButton" destination="0ma-Ca-Jv6" id="ejK-el-X99"/>
-                <outlet property="xibButton" destination="KCc-59-wrq" id="l7G-sP-Eky"/>
+                <outlet property="topView" destination="Dio-GX-PY8" id="AdZ-rT-GJS"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -27,14 +19,14 @@
         <window title="XCode Line" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="838" height="612"/>
+            <rect key="contentRect" x="196" y="240" width="838" height="633"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="838" height="612"/>
+                <rect key="frame" x="0.0" y="0.0" width="838" height="633"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PND-wv-V6q">
-                        <rect key="frame" x="18" y="532" width="802" height="30"/>
+                        <rect key="frame" x="18" y="523" width="802" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="gnH-Ra-Otg"/>
                         </constraints>
@@ -56,7 +48,7 @@
                         </textFieldCell>
                     </textField>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4q-9F-G7U">
-                        <rect key="frame" x="20" y="67" width="798" height="455"/>
+                        <rect key="frame" x="20" y="47" width="798" height="466"/>
                         <clipView key="contentView" id="XKu-S9-Xvu">
                             <rect key="frame" x="1" y="17" width="238" height="117"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -121,129 +113,28 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dbt-xZ-yQe">
-                        <rect key="frame" x="18" y="564" width="110" height="23"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Filter过滤选项" id="pgd-1h-gNp">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QZx-aK-0nN">
-                        <rect key="frame" x="209" y="559" width="64" height="35"/>
-                        <buttonCell key="cell" type="check" title=".plist" bezelStyle="regularSquare" imagePosition="left" inset="2" id="5tl-FM-cgc">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="switchClickOnButton:" target="-2" id="cLX-de-vF4"/>
-                        </connections>
-                    </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KCc-59-wrq">
-                        <rect key="frame" x="154" y="559" width="55" height="35"/>
-                        <buttonCell key="cell" type="check" title=".xib" bezelStyle="regularSquare" imagePosition="left" inset="2" id="3wt-el-HFo">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="switchClickOnButton:" target="-2" id="OQ5-pZ-naN"/>
-                        </connections>
-                    </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Js9-Bd-bDP">
-                        <rect key="frame" x="265" y="559" width="101" height="35"/>
-                        <buttonCell key="cell" type="check" title=".storyboard" bezelStyle="regularSquare" imagePosition="left" inset="2" id="4PZ-iD-zSK">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="switchClickOnButton:" target="-2" id="V2B-HL-f2W"/>
-                        </connections>
-                    </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pHK-1X-Jbz">
-                        <rect key="frame" x="111" y="559" width="44" height="35"/>
-                        <buttonCell key="cell" type="check" title="\n" bezelStyle="regularSquare" imagePosition="left" inset="2" id="gew-Nc-r5O">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="switchClickOnButton:" target="-2" id="kBB-y4-76U"/>
-                        </connections>
-                    </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EFD-Iy-Y71">
-                        <rect key="frame" x="364" y="559" width="101" height="35"/>
-                        <buttonCell key="cell" type="check" title=".cocoapods" bezelStyle="regularSquare" imagePosition="left" inset="2" id="2FT-VU-qkT">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="switchClickOnButton:" target="-2" id="2er-Sp-8rH"/>
-                        </connections>
-                    </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7jj-zp-KET">
-                        <rect key="frame" x="460" y="558" width="66" height="35"/>
-                        <buttonCell key="cell" type="check" title=".json" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Qe8-tc-u3Q">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="switchClickOnButton:" target="-2" id="gIm-09-q3b"/>
-                        </connections>
-                    </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dfp-HT-4am">
-                        <rect key="frame" x="519" y="558" width="59" height="35"/>
-                        <buttonCell key="cell" type="check" title=".pch" bezelStyle="regularSquare" imagePosition="left" inset="2" id="ocN-8Q-bMA">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="switchClickOnButton:" target="-2" id="E4S-G6-AHI"/>
-                        </connections>
-                    </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EQ9-qw-A3S">
-                        <rect key="frame" x="572" y="558" width="69" height="35"/>
-                        <buttonCell key="cell" type="check" title=".strings" bezelStyle="regularSquare" imagePosition="left" inset="2" id="1KW-oC-vDo">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="switchClickOnButton:" target="-2" id="9R3-Lc-idB"/>
-                        </connections>
-                    </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mR2-fd-Kws">
-                        <rect key="frame" x="645" y="558" width="53" height="35"/>
-                        <buttonCell key="cell" type="check" title=".lock" bezelStyle="regularSquare" imagePosition="left" inset="2" id="apn-Bj-Y4G">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="switchClickOnButton:" target="-2" id="fNb-0p-vTv"/>
-                        </connections>
-                    </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0ma-Ca-Jv6">
-                        <rect key="frame" x="702" y="558" width="118" height="35"/>
-                        <buttonCell key="cell" type="check" title=". xcworkspace" bezelStyle="regularSquare" imagePosition="left" inset="2" id="rDn-Of-udI">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="switchClickOnButton:" target="-2" id="MFW-4j-qac"/>
-                        </connections>
-                    </button>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="Dio-GX-PY8">
+                        <rect key="frame" x="20" y="513" width="798" height="110"/>
+                    </customView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Dio-GX-PY8" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="2O5-an-DAQ"/>
                     <constraint firstAttribute="trailing" secondItem="B4q-9F-G7U" secondAttribute="trailing" constant="20" id="9Sn-hW-gMW"/>
+                    <constraint firstAttribute="trailing" secondItem="Dio-GX-PY8" secondAttribute="trailing" constant="20" id="AKu-nF-pHK"/>
                     <constraint firstAttribute="trailing" secondItem="PND-wv-V6q" secondAttribute="trailing" constant="20" id="CXH-xE-Aq6"/>
-                    <constraint firstItem="PND-wv-V6q" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="50" id="E4X-zB-Cf8"/>
+                    <constraint firstItem="PND-wv-V6q" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="80" id="E4X-zB-Cf8"/>
+                    <constraint firstItem="B4q-9F-G7U" firstAttribute="top" secondItem="Dio-GX-PY8" secondAttribute="bottom" id="Mja-Pr-BbA"/>
                     <constraint firstItem="PND-wv-V6q" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="TB5-l2-mAe"/>
-                    <constraint firstItem="69U-oG-5RX" firstAttribute="top" secondItem="B4q-9F-G7U" secondAttribute="bottom" constant="40" id="eyW-H5-VS3"/>
+                    <constraint firstItem="69U-oG-5RX" firstAttribute="top" secondItem="B4q-9F-G7U" secondAttribute="bottom" constant="20" id="eyW-H5-VS3"/>
                     <constraint firstAttribute="bottom" secondItem="69U-oG-5RX" secondAttribute="bottom" constant="10" id="fYz-C6-jye"/>
                     <constraint firstAttribute="trailing" secondItem="69U-oG-5RX" secondAttribute="trailing" constant="20" id="gSj-pc-7Wm"/>
                     <constraint firstItem="B4q-9F-G7U" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="giY-86-Fp4"/>
                     <constraint firstItem="69U-oG-5RX" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="pxj-mo-gWS"/>
                     <constraint firstItem="B4q-9F-G7U" firstAttribute="top" secondItem="PND-wv-V6q" secondAttribute="bottom" constant="10" id="vNV-sS-Mf8"/>
+                    <constraint firstItem="Dio-GX-PY8" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="10" id="xIb-UN-i9W"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="70" y="328"/>
+            <point key="canvasLocation" x="-338" y="955.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="5N2-KN-JlK"/>
     </objects>

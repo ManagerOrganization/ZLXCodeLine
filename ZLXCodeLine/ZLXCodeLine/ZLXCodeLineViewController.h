@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @interface ZLXCodeLineViewController : NSWindowController
-
+// 工作区间
 @property (copy,nonatomic) NSString *workspace;
-
 @end
