@@ -9,6 +9,9 @@
 #import "ZLXCodeLineViewController.h"
 #import "ZLXCodeFileType.h"
 
+static NSUInteger ZLXCodeButtonColumn = 9;
+static NSUInteger ZLXCodeButtonWidthOrHeight = 22;
+
 static NSString *FilterExtensionKey = @"FilterExtensionKey";
 @interface ZLXCodeLineViewController () <NSTableViewDataSource,NSTableViewDelegate>
 
@@ -169,14 +172,13 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
                     self.titleField.stringValue = [NSString stringWithFormat:@"%@项目共有%ld行代码!", [[self.workspace componentsSeparatedByString:@"/"] lastObject],self.codeLines];
                     [self.tableView reloadData];
 
-                    NSInteger colunm = 8;
-                    CGFloat width = self.topView.frame.size.width / colunm;
+                    CGFloat width = self.topView.frame.size.width / ZLXCodeButtonColumn;
                     
                     for (NSInteger i = 0; i < self.originFilters.count; i++) {
                         NSButton *btn = [[NSButton alloc] init];
-                        
-                        [btn setWantsLayer:YES];
-                        [btn.layer setBackgroundColor:                            [NSColor colorWithCalibratedRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1.0].CGColor];
+//                        btn.wantsDefaultClipping = NO;
+//                        [btn setWantsLayer:YES];
+//                        [btn.layer setBackgroundColor:                            [NSColor colorWithCalibratedRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1.0].CGColor];
                         if (i > 0) {
                             [btn setButtonType:NSSwitchButton];
                         }else{
@@ -188,7 +190,7 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
                         btn.target = self;
                         btn.state = [self switchButtonOnStateWithTitle:btn.title];
                         btn.action = @selector(switchClickOnButton:);
-                        btn.frame = NSRectFromCGRect(CGRectMake(width * i, self.topView.frame.size.height - 20, width, 20));
+                        btn.frame = NSRectFromCGRect(CGRectMake((width + 10) * i, self.topView.frame.size.height - ZLXCodeButtonWidthOrHeight, width, ZLXCodeButtonWidthOrHeight));
                         [self.topView addSubview:btn];
                     }
                     
@@ -205,23 +207,21 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
                         if (![self.originFilters containsObject:fileType] || [fileType isEqualToString:@"\n"]){
                             
                             NSButton *btn = [[NSButton alloc] init];
-                            [btn setWantsLayer:YES];
-                            [btn.layer setBackgroundColor:                            [NSColor colorWithCalibratedRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1.0].CGColor];
                             
                             [btn setButtonType:NSSwitchButton];
                             btn.title = [NSString stringWithFormat:@"%@",fileType];
-                            NSSize size = [btn.title boundingRectWithSize:NSSizeFromCGSize(CGSizeMake(self.topView.frame.size.width, MAXFLOAT)) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:btn.font}].size;
+//                            NSSize size = [btn.title boundingRectWithSize:NSSizeFromCGSize(CGSizeMake(self.topView.frame.size.width, MAXFLOAT)) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:btn.font}].size;
                             
                             btn.state = [self switchButtonOnStateWithTitle:btn.title];
                             btn.target = self;
                             btn.action = @selector(switchClickOnButton:);
-                            NSInteger row = (index + 4) / 8;
-                            NSInteger col = (index + 4) % 8;
+                            NSInteger row = (index + self.originFilters.count) / ZLXCodeButtonColumn;
+                            NSInteger col = (index + self.originFilters.count) % ZLXCodeButtonColumn;
                             
                             if (row == 0) {
-                                btn.frame = NSRectFromCGRect(CGRectMake((col) * width, self.topView.frame.size.height - 20, size.width + 22, 20));
+                                btn.frame = NSRectFromCGRect(CGRectMake((col) * (width + 10), self.topView.frame.size.height - ZLXCodeButtonWidthOrHeight, width + ZLXCodeButtonWidthOrHeight, ZLXCodeButtonWidthOrHeight));
                             }else{
-                                btn.frame = NSRectFromCGRect(CGRectMake(col * width, self.topView.frame.size.height - (row + 1) * 22,size.width + 22, 22));
+                                btn.frame = NSRectFromCGRect(CGRectMake(col * (width + 10), self.topView.frame.size.height - (row + 1) * ZLXCodeButtonWidthOrHeight,width + ZLXCodeButtonWidthOrHeight, ZLXCodeButtonWidthOrHeight));
                             }
                             
                             [self.topView addSubview:btn];
