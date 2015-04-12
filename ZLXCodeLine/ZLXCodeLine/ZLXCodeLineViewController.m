@@ -172,13 +172,10 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
                     self.titleField.stringValue = [NSString stringWithFormat:@"%@项目共有%ld行代码!", [[self.workspace componentsSeparatedByString:@"/"] lastObject],self.codeLines];
                     [self.tableView reloadData];
 
-                    CGFloat width = self.topView.frame.size.width / ZLXCodeButtonColumn;
+                    CGFloat width = self.topView.frame.size.width / 10;
                     
                     for (NSInteger i = 0; i < self.originFilters.count; i++) {
                         NSButton *btn = [[NSButton alloc] init];
-//                        btn.wantsDefaultClipping = NO;
-//                        [btn setWantsLayer:YES];
-//                        [btn.layer setBackgroundColor:                            [NSColor colorWithCalibratedRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1.0].CGColor];
                         if (i > 0) {
                             [btn setButtonType:NSSwitchButton];
                         }else{
@@ -190,28 +187,33 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
                         btn.target = self;
                         btn.state = [self switchButtonOnStateWithTitle:btn.title];
                         btn.action = @selector(switchClickOnButton:);
-                        btn.frame = NSRectFromCGRect(CGRectMake((width + 10) * i, self.topView.frame.size.height - ZLXCodeButtonWidthOrHeight, width, ZLXCodeButtonWidthOrHeight));
+                        if (i == 0) {
+                            btn.frame = NSRectFromCGRect(CGRectMake(0, self.topView.frame.size.height - ZLXCodeButtonWidthOrHeight, width + ZLXCodeButtonWidthOrHeight, ZLXCodeButtonWidthOrHeight));
+                        }else{
+                            btn.frame = NSRectFromCGRect(CGRectMake((width + 10) * i + ZLXCodeButtonWidthOrHeight, self.topView.frame.size.height - ZLXCodeButtonWidthOrHeight, width + ZLXCodeButtonWidthOrHeight, ZLXCodeButtonWidthOrHeight));
+                        }
+
                         [self.topView addSubview:btn];
                     }
                     
                     NSMutableArray *fileNames = [NSMutableArray array];
-                    for (ZLXCodeFileType *fileType in [self.fileExtesionDict allValues]) {
-                        [fileNames addObject:fileType.typeName];
-                    }
                     for (NSString *fileType in self.filterExtension) {
                         [fileNames addObject:fileType];
                     }
                     
-                    [fileNames enumerateObjectsUsingBlock:^(NSString *fileType, NSUInteger index, BOOL *stop) {
+                    for (ZLXCodeFileType *fileType in [self.fileExtesionDict allValues]) {
+                        [fileNames addObject:fileType.typeName];
+                    }
+                    
+                    NSMutableSet *set = [NSMutableSet setWithArray:fileNames];
+                    [set minusSet:[NSSet setWithArray:self.originFilters]];
+                    
+                    [[set allObjects] enumerateObjectsUsingBlock:^(NSString *fileType, NSUInteger index, BOOL *stop) {
                         
-                        if (![self.originFilters containsObject:fileType] || [fileType isEqualToString:@"\n"]){
-                            
                             NSButton *btn = [[NSButton alloc] init];
                             
                             [btn setButtonType:NSSwitchButton];
                             btn.title = [NSString stringWithFormat:@"%@",fileType];
-//                            NSSize size = [btn.title boundingRectWithSize:NSSizeFromCGSize(CGSizeMake(self.topView.frame.size.width, MAXFLOAT)) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:btn.font}].size;
-                            
                             btn.state = [self switchButtonOnStateWithTitle:btn.title];
                             btn.target = self;
                             btn.action = @selector(switchClickOnButton:);
@@ -219,15 +221,13 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
                             NSInteger col = (index + self.originFilters.count) % ZLXCodeButtonColumn;
                             
                             if (row == 0) {
-                                btn.frame = NSRectFromCGRect(CGRectMake((col) * (width + 10), self.topView.frame.size.height - ZLXCodeButtonWidthOrHeight, width + ZLXCodeButtonWidthOrHeight, ZLXCodeButtonWidthOrHeight));
+                                btn.frame = NSRectFromCGRect(CGRectMake((col) * (width+10)+ZLXCodeButtonWidthOrHeight * 2, self.topView.frame.size.height - ZLXCodeButtonWidthOrHeight, width + ZLXCodeButtonWidthOrHeight, ZLXCodeButtonWidthOrHeight));
                             }else{
-                                btn.frame = NSRectFromCGRect(CGRectMake(col * (width + 10), self.topView.frame.size.height - (row + 1) * ZLXCodeButtonWidthOrHeight,width + ZLXCodeButtonWidthOrHeight, ZLXCodeButtonWidthOrHeight));
+                                btn.frame = NSRectFromCGRect(CGRectMake(col * (width  + 10), self.topView.frame.size.height - (row + 1) * ZLXCodeButtonWidthOrHeight,width + ZLXCodeButtonWidthOrHeight, ZLXCodeButtonWidthOrHeight));
                             }
                             
                             [self.topView addSubview:btn];
                             [self.buttons addObject:btn];
-                        }
-                        
                     }];
                     
                 });

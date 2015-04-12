@@ -114,13 +114,13 @@
                         </tableHeaderView>
                     </scrollView>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="Dio-GX-PY8">
-                        <rect key="frame" x="20" y="510" width="843" height="110"/>
+                        <rect key="frame" x="20" y="510" width="863" height="110"/>
                     </customView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Dio-GX-PY8" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="2O5-an-DAQ"/>
                     <constraint firstAttribute="trailing" secondItem="B4q-9F-G7U" secondAttribute="trailing" constant="20" id="9Sn-hW-gMW"/>
-                    <constraint firstAttribute="trailing" secondItem="Dio-GX-PY8" secondAttribute="trailing" constant="20" id="AKu-nF-pHK"/>
+                    <constraint firstAttribute="trailing" secondItem="Dio-GX-PY8" secondAttribute="trailing" id="AKu-nF-pHK"/>
                     <constraint firstAttribute="trailing" secondItem="PND-wv-V6q" secondAttribute="trailing" constant="20" id="CXH-xE-Aq6"/>
                     <constraint firstItem="PND-wv-V6q" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="80" id="E4X-zB-Cf8"/>
                     <constraint firstItem="B4q-9F-G7U" firstAttribute="top" secondItem="Dio-GX-PY8" secondAttribute="bottom" id="Mja-Pr-BbA"/>
