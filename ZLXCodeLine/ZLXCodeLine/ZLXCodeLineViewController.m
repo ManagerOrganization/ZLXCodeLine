@@ -13,6 +13,8 @@ static NSUInteger ZLXCodeButtonColumn = 9;
 static NSUInteger ZLXCodeButtonWidthOrHeight = 22;
 
 static NSString *FilterExtensionKey = @"FilterExtensionKey";
+static NSString *LastEditExtensionKey   = @"LastEditExtensionKey";
+
 @interface ZLXCodeLineViewController () <NSTableViewDataSource,NSTableViewDelegate>
 
 // Manager
@@ -35,6 +37,7 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
 @property (strong,nonatomic) NSMutableArray *buttons;
 @property (weak) IBOutlet NSView *topView;
 @property (weak) IBOutlet NSScrollView *scrollView;
+@property (weak) IBOutlet NSTextField *recoderLastEditLabel;
 
 @end
 
@@ -111,8 +114,9 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
     self.tableView.headerView = nil;
     
     [self searchWorkSpaceFiles];
-    
 }
+
+
 
 - (BOOL)switchButtonOnStateWithTitle:(NSString *)title{
     return [self.filterExtension containsObject:title];
@@ -147,7 +151,10 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
         }
     }
     return workfilesM;
+    
 }
+
+
 
 /**
  *  搜索工程底下的文件
@@ -178,7 +185,37 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.titleField.stringValue = [NSString stringWithFormat:@"%@项目共有%ld行代码!", [[self.workspace componentsSeparatedByString:@"/"] lastObject],self.codeLines];
                     [self.tableView reloadData];
-
+                    
+                    NSArray *lastList = [[NSUserDefaults standardUserDefaults] objectForKey:LastEditExtensionKey];
+                    // 数据格式 项目名_时间_代码量
+                    for (NSString *lastPath in lastList) {
+                        if ([lastPath rangeOfString:self.workspace].location != NSNotFound) {
+                            
+                            NSArray *data = [lastPath componentsSeparatedByString:@"_"];
+                            NSString *time = data[1];
+                            NSString *lines = data[2];
+                            
+                            [self.recoderLastEditLabel setStringValue:[NSString stringWithFormat:@"上一次查看的时间：%@，改动了%ld行代码",time,abs((int)self.codeLines - [lines intValue])]];
+                            break;
+                        }
+                    }
+                    
+                    NSMutableArray *lastLists = [NSMutableArray arrayWithArray:lastList];
+                    // 数据格式 项目名_时间_代码量
+                    for (NSString *lastPath in lastLists) {
+                        if ([lastPath rangeOfString:self.workspace].location != NSNotFound) {
+                            [lastLists removeObject:lastPath];
+                            break;
+                        }
+                    }
+                    
+                    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+                    fmt.dateFormat = @"yyyy-MM-dd HH:mm";
+                    NSString *date = [fmt stringFromDate:[NSDate date]];
+                    
+                    [lastLists addObject:[NSString stringWithFormat:@"%@_%@_%ld",self.workspace,date,self.codeLines]];
+                    [[NSUserDefaults standardUserDefaults] setObject:lastLists forKey:LastEditExtensionKey];
+                    
                     CGFloat width = self.topView.frame.size.width / 10;
                     
                     for (NSInteger i = 0; i < self.originFilters.count; i++) {
@@ -250,7 +287,8 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
                 for (NSString *lineStr in [str componentsSeparatedByString:@"\n"]) {
                     
                     if (lineStr.length == 0) {
-                        continue;
+                        lineCounts++;
+                        break;
                     }
                     
                     BOOL isEmptyWarp = YES;
@@ -288,7 +326,6 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
                 [self.files addObject:[NSString stringWithFormat:@"%ld行 %@",lineCounts, pathArr]];
                 self.codeLines += lineCounts;
             }
-            
         }
     });
 }

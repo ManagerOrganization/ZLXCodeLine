@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1066" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13F1066" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ZLXCodeLineViewController">
             <connections>
                 <outlet property="centerView" destination="EiT-Mj-1SZ" id="PMW-QA-VHM"/>
+                <outlet property="recoderLastEditLabel" destination="Hmr-Uz-rah" id="bJO-kY-SVs"/>
                 <outlet property="scrollView" destination="B4q-9F-G7U" id="dEh-TR-dyb"/>
                 <outlet property="tableView" destination="PDo-cm-iNU" id="9Is-sc-dxP"/>
                 <outlet property="titleField" destination="PND-wv-V6q" id="5Io-lO-0x6"/>
@@ -26,9 +26,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PND-wv-V6q">
-                        <rect key="frame" x="18" y="520" width="847" height="30"/>
+                        <rect key="frame" x="18" y="530" width="847" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="gnH-Ra-Otg"/>
+                            <constraint firstAttribute="height" constant="20" id="gnH-Ra-Otg"/>
                         </constraints>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="正在计算中哦.." id="m3q-d6-5qV">
                             <font key="font" metaFont="system" size="18"/>
@@ -48,12 +48,13 @@
                         </textFieldCell>
                     </textField>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4q-9F-G7U">
-                        <rect key="frame" x="20" y="47" width="843" height="463"/>
+                        <rect key="frame" x="20" y="37" width="843" height="468"/>
                         <clipView key="contentView" id="XKu-S9-Xvu">
-                            <rect key="frame" x="1" y="17" width="238" height="117"/>
+                            <rect key="frame" x="1" y="17" width="841" height="450"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="ctu-hI-Z4X" viewBased="YES" id="PDo-cm-iNU">
+                                    <rect key="frame" x="0.0" y="0.0" width="841" height="450"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -109,13 +110,24 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" alphaValue="0.0" id="ctu-hI-Z4X">
-                            <rect key="frame" x="0.0" y="0.0" width="238" height="17"/>
+                            <rect key="frame" x="0.0" y="0.0" width="841" height="17"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="Dio-GX-PY8">
-                        <rect key="frame" x="20" y="510" width="863" height="110"/>
+                        <rect key="frame" x="20" y="501" width="863" height="119"/>
                     </customView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hmr-Uz-rah">
+                        <rect key="frame" x="18" y="513" width="847" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="17" id="1gD-9k-hhW"/>
+                        </constraints>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="获取上一次更改的数据中.." id="ZDa-hq-pmG">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Dio-GX-PY8" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="2O5-an-DAQ"/>
@@ -123,18 +135,20 @@
                     <constraint firstAttribute="trailing" secondItem="Dio-GX-PY8" secondAttribute="trailing" id="AKu-nF-pHK"/>
                     <constraint firstAttribute="trailing" secondItem="PND-wv-V6q" secondAttribute="trailing" constant="20" id="CXH-xE-Aq6"/>
                     <constraint firstItem="PND-wv-V6q" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="80" id="E4X-zB-Cf8"/>
-                    <constraint firstItem="B4q-9F-G7U" firstAttribute="top" secondItem="Dio-GX-PY8" secondAttribute="bottom" id="Mja-Pr-BbA"/>
+                    <constraint firstItem="B4q-9F-G7U" firstAttribute="top" secondItem="Dio-GX-PY8" secondAttribute="bottom" constant="-4" id="Mja-Pr-BbA"/>
                     <constraint firstItem="PND-wv-V6q" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="TB5-l2-mAe"/>
-                    <constraint firstItem="69U-oG-5RX" firstAttribute="top" secondItem="B4q-9F-G7U" secondAttribute="bottom" constant="20" id="eyW-H5-VS3"/>
+                    <constraint firstItem="69U-oG-5RX" firstAttribute="top" secondItem="B4q-9F-G7U" secondAttribute="bottom" constant="10" id="eyW-H5-VS3"/>
                     <constraint firstAttribute="bottom" secondItem="69U-oG-5RX" secondAttribute="bottom" constant="10" id="fYz-C6-jye"/>
+                    <constraint firstItem="Hmr-Uz-rah" firstAttribute="top" secondItem="PND-wv-V6q" secondAttribute="bottom" id="fla-wW-Evp"/>
                     <constraint firstAttribute="trailing" secondItem="69U-oG-5RX" secondAttribute="trailing" constant="20" id="gSj-pc-7Wm"/>
+                    <constraint firstItem="Hmr-Uz-rah" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="gd5-h5-ixv"/>
                     <constraint firstItem="B4q-9F-G7U" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="giY-86-Fp4"/>
                     <constraint firstItem="69U-oG-5RX" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="pxj-mo-gWS"/>
-                    <constraint firstItem="B4q-9F-G7U" firstAttribute="top" secondItem="PND-wv-V6q" secondAttribute="bottom" constant="10" id="vNV-sS-Mf8"/>
+                    <constraint firstItem="B4q-9F-G7U" firstAttribute="top" secondItem="PND-wv-V6q" secondAttribute="bottom" constant="25" id="vNV-sS-Mf8"/>
+                    <constraint firstAttribute="trailing" secondItem="Hmr-Uz-rah" secondAttribute="trailing" constant="20" id="wVc-b5-XYz"/>
                     <constraint firstItem="Dio-GX-PY8" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="10" id="xIb-UN-i9W"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="-315.5" y="954"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="5N2-KN-JlK"/>
     </objects>
