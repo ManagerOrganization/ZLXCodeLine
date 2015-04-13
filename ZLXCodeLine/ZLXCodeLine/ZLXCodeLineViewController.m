@@ -57,7 +57,7 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
 - (NSArray *)originFilters{
     if (!_originFilters) {
         _originFilters = @[
-                           @"过滤类型：",
+                           @"刷新过滤类型：",
                            @"\\n",
                            @".cocoapods",
                            @".xcworkspace"
@@ -153,6 +153,13 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
  *  搜索工程底下的文件
  */
 - (void)searchWorkSpaceFiles{
+    
+    [self.files removeAllObjects];
+    [self.buttons removeAllObjects];
+    [[self.topView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    self.codeLines = 0;
+    [self.fileExtesionDict removeAllObjects];
+    
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         // 1.获取所有的文件
         NSMutableArray *workfilesM = [self getAllWorkFiles];
@@ -178,15 +185,15 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
                         NSButton *btn = [[NSButton alloc] init];
                         if (i > 0) {
                             [btn setButtonType:NSSwitchButton];
+                            btn.action = @selector(switchClickOnButton:);
                         }else{
-                            [btn setButtonType:NSOnOffButton];
-                            btn.enabled = NO;
+                            [btn setButtonType:NSPushOnPushOffButton];
+                            btn.action = @selector(refreshClickOnButton);
                         }
                         
                         btn.title = [NSString stringWithFormat:@"%@",self.originFilters[i]];
                         btn.target = self;
                         btn.state = [self switchButtonOnStateWithTitle:btn.title];
-                        btn.action = @selector(switchClickOnButton:);
                         if (i == 0) {
                             btn.frame = NSRectFromCGRect(CGRectMake(0, self.topView.frame.size.height - ZLXCodeButtonWidthOrHeight, width + ZLXCodeButtonWidthOrHeight, ZLXCodeButtonWidthOrHeight));
                         }else{
@@ -284,6 +291,10 @@ static NSString *FilterExtensionKey = @"FilterExtensionKey";
             
         }
     });
+}
+
+- (void)refreshClickOnButton{
+    [self searchWorkSpaceFiles];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
