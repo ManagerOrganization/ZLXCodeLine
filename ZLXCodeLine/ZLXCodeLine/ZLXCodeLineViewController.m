@@ -98,6 +98,9 @@ static NSString *LastEditExtensionKey   = @"LastEditExtensionKey";
     return _fileManager;
 }
 
+/**
+ *  按钮点击的时候记录状态
+ */
 - (IBAction)switchClickOnButton:(NSButton *)sender {
     if (sender.state == NO) {
         [self.filterExtension removeObject:sender.title];
@@ -110,14 +113,11 @@ static NSString *LastEditExtensionKey   = @"LastEditExtensionKey";
 }
 
 - (void)windowDidLoad{
-    
     self.tableView.backgroundColor = [NSColor clearColor];
     self.tableView.headerView = nil;
-    
+    // 搜索文件
     [self searchWorkSpaceFiles];
 }
-
-
 
 - (BOOL)switchButtonOnStateWithTitle:(NSString *)title{
     return [self.filterExtension containsObject:title];
@@ -157,7 +157,6 @@ static NSString *LastEditExtensionKey   = @"LastEditExtensionKey";
 /**
  *  搜索工程底下的文件
  */
-#pragma mark - 搜索工程底下的文件
 - (void)searchWorkSpaceFiles{
     
     // 重置
@@ -182,9 +181,11 @@ static NSString *LastEditExtensionKey   = @"LastEditExtensionKey";
             // 最后的时候，调用block
             if (i == arrCount && self.buttons.count == 0) {
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    // 统计当前代码量
                     self.titleField.stringValue = [NSString stringWithFormat:@"%@项目共有%ld行代码!", [[self.workspace componentsSeparatedByString:@"/"] lastObject],self.codeLines];
                     [self.tableView reloadData];
                     
+                    // 获取改动的代码量
                     NSArray *lastList = [[NSUserDefaults standardUserDefaults] objectForKey:LastEditExtensionKey];
                     // 数据格式 项目名_时间_代码量
                     for (NSString *lastPath in lastList) {
@@ -201,6 +202,7 @@ static NSString *LastEditExtensionKey   = @"LastEditExtensionKey";
                     
                     [self.extensionLabel setStringValue:@""];
                     for (ZLXCodeFileType *type in [self.fileExtesionDict allValues]) {
+                        // 统计名字
                         [self.extensionLabel setStringValue:[NSString stringWithFormat:@"%@ %@有%ld文件",[self.extensionLabel stringValue], type.typeName,type.counts]];
                     }
                     
@@ -307,11 +309,6 @@ static NSString *LastEditExtensionKey   = @"LastEditExtensionKey";
                         }
                     }
                     
-//                    BOOL isEmptyWarp = YES;
-                    
-//                    if (!isEmptyWarp) {
-//                        lineCounts--;
-//                    }
                 }
             }else {
                 lineCounts = [[str componentsSeparatedByString:@"\n"] count];
