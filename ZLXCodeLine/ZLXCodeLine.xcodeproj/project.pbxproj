@@ -36,6 +36,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		48364C741ADBAC500019377F /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		48C0D18C1AD3DC6100CA5DFB = {
 			isa = PBXGroup;
 			children = (
@@ -72,6 +79,7 @@
 		48C80D621AD5484B00367FB4 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				48364C741ADBAC500019377F /* View */,
 				48E1357D1AD4CBC5005EAE07 /* ZLXCodeLine.h */,
 				48E1357E1AD4CBC5005EAE07 /* ZLXCodeLine.m */,
 				48C80D641AD5486A00367FB4 /* Model */,
@@ -139,6 +147,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 48C0D18C1AD3DC6100CA5DFB;
 			productRefGroup = 48C0D1961AD3DC6100CA5DFB /* Products */;

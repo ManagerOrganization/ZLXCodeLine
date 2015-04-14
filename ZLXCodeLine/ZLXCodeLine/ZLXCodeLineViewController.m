@@ -38,6 +38,7 @@ static NSString *LastEditExtensionKey   = @"LastEditExtensionKey";
 @property (weak) IBOutlet NSView *topView;
 @property (weak) IBOutlet NSScrollView *scrollView;
 @property (weak) IBOutlet NSTextField *recoderLastEditLabel;
+@property (weak) IBOutlet NSTextField *extensionLabel;
 
 @end
 
@@ -151,16 +152,15 @@ static NSString *LastEditExtensionKey   = @"LastEditExtensionKey";
         }
     }
     return workfilesM;
-    
 }
-
-
 
 /**
  *  搜索工程底下的文件
  */
+#pragma mark - 搜索工程底下的文件
 - (void)searchWorkSpaceFiles{
     
+    // 重置
     [self.files removeAllObjects];
     [self.buttons removeAllObjects];
     [[self.topView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -170,7 +170,6 @@ static NSString *LastEditExtensionKey   = @"LastEditExtensionKey";
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         // 1.获取所有的文件
         NSMutableArray *workfilesM = [self getAllWorkFiles];
-        
         NSInteger arrCount = workfilesM.count;
         // 2.遍历每个文件
         for (NSInteger i = 0; i <= arrCount; i++) {
@@ -198,6 +197,11 @@ static NSString *LastEditExtensionKey   = @"LastEditExtensionKey";
                             [self.recoderLastEditLabel setStringValue:[NSString stringWithFormat:@"上一次查看的时间：%@，改动了%ld行代码",time,abs((int)self.codeLines - [lines intValue])]];
                             break;
                         }
+                    }
+                    
+                    [self.extensionLabel setStringValue:@""];
+                    for (ZLXCodeFileType *type in [self.fileExtesionDict allValues]) {
+                        [self.extensionLabel setStringValue:[NSString stringWithFormat:@"%@ %@有%ld文件",[self.extensionLabel stringValue], type.typeName,type.counts]];
                     }
                     
                     NSMutableArray *lastLists = [NSMutableArray arrayWithArray:lastList];
