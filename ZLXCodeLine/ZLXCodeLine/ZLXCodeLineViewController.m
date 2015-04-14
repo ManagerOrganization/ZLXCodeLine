@@ -288,25 +288,30 @@ static NSString *LastEditExtensionKey   = @"LastEditExtensionKey";
             
             NSInteger lineCounts = 0;
             if ([self.filterExtension containsObject:@"\\n"]) {
+                lineCounts = [[str componentsSeparatedByString:@"\n"] count];
                 for (NSString *lineStr in [str componentsSeparatedByString:@"\n"]) {
                     
                     if (lineStr.length == 0) {
-                        lineCounts++;
-                        break;
-                    }
-                    
-                    BOOL isEmptyWarp = YES;
-                    for(int i = 0; i < [lineStr length]; i++)
-                    {
-                        if (![[lineStr substringWithRange:NSMakeRange(i,1)] isEqualToString:@" "]){
-                            isEmptyWarp = NO;
-                            break;
+                        lineCounts--;
+                    }else{
+                        BOOL isEmptyWarp = YES;
+                        for(int i = 0; i < [lineStr length]; i++)
+                        {
+                            if (!([[lineStr substringWithRange:NSMakeRange(i,1)] isEqualToString:@" "] || [[lineStr substringWithRange:NSMakeRange(i,1)] isEqualToString:@""])){
+                                isEmptyWarp = NO;
+                                break;
+                            }
+                        }
+                        if (isEmptyWarp) {
+                            lineCounts--;
                         }
                     }
                     
-                    if (!isEmptyWarp) {
-                        lineCounts++;
-                    }
+//                    BOOL isEmptyWarp = YES;
+                    
+//                    if (!isEmptyWarp) {
+//                        lineCounts--;
+//                    }
                 }
             }else {
                 lineCounts = [[str componentsSeparatedByString:@"\n"] count];
